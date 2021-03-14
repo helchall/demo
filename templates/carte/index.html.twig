@@ -5,31 +5,33 @@
 {% block page_title %}Carte index{% endblock %}
 
 {% block body %}
-    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for carte in cartes %}
-            <tr>
-                <td>{{ carte.id }}</td>
-                <td>{{ carte.name }}</td>
-                <td>
-                    <a href="{{ path('carte_show', {'id': carte.id}) }}">show</a>
-                    <a href="{{ path('carte_edit', {'id': carte.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for carte in cartes %}
+                <tr>
+                    <td>{{ carte.id }}</td>
+                    <td>{{ carte.name }}</td>
+                    <td>
+                        <a href="{{ path('carte_show', {'id': carte.id}) }}">show</a>
+                        <a href="{{ path('carte_edit', {'id': carte.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
     <a href="{{ path('carte_new') }}">Create new</a>
 {% endblock %}
