@@ -1,0 +1,52 @@
+{% extends 'base_login.html.twig' %}
+
+{% block title %}Registration!{% endblock %}
+
+{% block body %}
+    <style>
+        button:last-child {
+            visibility: hidden;
+        }
+    </style>
+    <div class="container">
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                    <div class="col-lg-7">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                            </div>
+
+                            <!-- Begin Register form -->
+                            {{ form_start(form, {'attr': {'class': 'user'}}) }}
+                            <div class="form-group">
+                                {{ form_widget(form.username, {'attr': {'class': 'form-control form-control-user', 'placeholder': 'Username'}}) }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_widget(form.email, {'attr': {'class': 'form-control form-control-user', 'placeholder': 'Email Address'}}) }}
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control form-control-user', 'placeholder': 'Password'}}) }}
+                                </div>
+                                <div class="col-sm-6">
+                                    {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control form-control-user', 'placeholder': 'Repeat Password'}}) }}
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-user btn-block">
+                                Register Account
+                            <button>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
