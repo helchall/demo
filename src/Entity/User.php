@@ -54,6 +54,16 @@ class User implements UserInterface
      */
     private $roles;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $activationToken;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $resetToken;
+
     public function __construct()
     {
         $this->roles = array('ROLE_USER');
@@ -120,5 +130,29 @@ class User implements UserInterface
 
     public function eraseCredentials()
     {
+    }
+
+    public function getActivationToken(): ?string
+    {
+        return $this->activationToken;
+    }
+
+    public function setActivationToken(?string $activationToken): self
+    {
+        $this->activationToken = $activationToken;
+
+        return $this;
+    }
+
+    public function getResetToken(): ?string
+    {
+        return $this->resetToken;
+    }
+
+    public function setResetToken(?string $resetToken): self
+    {
+        $this->resetToken = $resetToken;
+
+        return $this;
     }
 }
