@@ -22,15 +22,19 @@ class UserType extends AbstractType
                 'type' => PasswordType::class,
                 'first_options'  => array('label' => 'Password'),
                 'second_options' => array('label' => 'Repeat Password'),
-            ))
-            ->add('roles')
-        ;
+            ));
+
+            // Check if formtype is a form registration or form user
+            if (null === $options['registration']) {
+                $builder->add('roles');
+            }
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class'   => User::class,
+            'registration' => null
         ]);
     }
 }
