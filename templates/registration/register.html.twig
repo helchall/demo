@@ -7,6 +7,12 @@
         button:last-child {
             visibility: hidden;
         }
+        div.top-block {
+            padding-bottom: 0!important;
+        }
+        div.bottom-block {
+            padding-top: 0!important;
+        }
     </style>
     <div class="container">
         <div class="card o-hidden border-0 shadow-lg my-5">
@@ -15,7 +21,7 @@
                 <div class="row">
                     <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
                     <div class="col-lg-7">
-                        <div class="p-5">
+                        <div class="top-block p-5">
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                             </div>
@@ -44,7 +50,7 @@
                             <button>
                             {{ form_end(form) }}
                         </div>
-                        <div class="p-5 text-center">
+                        <div class="bottom-block p-5 text-center">
                             <hr>
                             <a class="small" href="{{ path('app_login') }}">Already have an account? Login!</a>
                         </div>
