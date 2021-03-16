@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\ForgotPassType;
 use App\Form\ResetPassType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,10 +27,9 @@ class ForgetPasswordController extends AbstractController
         UserRepository $userRepository,
         \Swift_Mailer $mailer,
         TokenGeneratorInterface $tokenGenerator
-    ): Response
-    {
+    ): Response {
         // Initializing form
-        $form = $this->createForm(ResetPassType::class);
+        $form = $this->createForm(ForgotPassType::class);
 
         // Handling form
         $form->handleRequest($request);
@@ -55,7 +55,7 @@ class ForgetPasswordController extends AbstractController
             $token = $tokenGenerator->generateToken();
 
             // Try to insert token into database
-            try{
+            try {
                 $user->setResetToken($token);
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($user);
@@ -76,8 +76,7 @@ class ForgetPasswordController extends AbstractController
                 ->setBody(
                     "Bonjour,<br><br>Une demande de réinitialisation de mot de passe a été effectuée pour le site Nouvelle-Techno.fr. Veuillez cliquer sur le lien suivant : " . $url,
                     'text/html'
-                )
-            ;
+                );
 
             // Sending mail
             $mailer->send($message);
@@ -90,7 +89,7 @@ class ForgetPasswordController extends AbstractController
         }
 
         // Generate form
-        return $this->render('security/forgotten_password.html.twig',[
+        return $this->render('security/forgotten_password.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -110,13 +109,26 @@ class ForgetPasswordController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        // Check request method
-        if ($request->isMethod('POST')) {
+        // Initializing form
+        $form = $this->createForm(ResetPassType::class);
+
+        // Handling form
+        $form->handleRequest($request);
+
+        // check fom if validate
+        if ($form->isSubmitted() && $form->isValid()) {
             // Reset token
             $user->setResetToken(null);
 
+            // Get data from form
+            $data = $form->getData();
+
+            // Encode the password (you could also do this via Doctrine listener)
+            $password = $passwordEncoder->encodePassword($user, $data['plainPassword']);
+            $user->setPassword($password);
+
             // Encode password
-            $user->setPassword($passwordEncoder->encodePassword($user, $request->request->get('password')));
+            //$user->setPassword($passwordEncoder->encodePassword($user, $request->request->get('password')));
 
             // Saving!
             $entityManager = $this->getDoctrine()->getManager();
@@ -129,7 +141,10 @@ class ForgetPasswordController extends AbstractController
             // Redirect to login page
             return $this->redirectToRoute('app_login');
         } else {
-            return $this->render('security/reset_password.html.twig', ['token' => $token]);
+            return $this->render('security/reset_password.html.twig', [
+               // 'token' => $token,
+                'form'  => $form->createView()
+            ]);
         }
     }
 }
