@@ -1,6 +1,9 @@
 <?php
 
-namespace App\Service;
+namespace App\Manager;
+
+// You can use mailer and create a "Trait class".
+// see : https://symfony.com/doc/4.4/mailer.html
 
 class EmailManager
 {
@@ -11,55 +14,41 @@ class EmailManager
      */
     private $swift_Mailer;
 
-    private $params = array(
-        'expediteur' => 'admin@tlmc.com',
-        'destinataire' => '',
-        'body' => '',
-        'type' => 'text/html'
-    );
-
+    /**
+     * Constructor
+     *
+     * @param \Swift_Mailer $mailer
+     */
     public function __construct(\Swift_Mailer $mailer)
     {
         $this->swift_Mailer = $mailer;
     }
 
     /**
-     * Fonction permettant l'envoi d'un mail en automatique
+     * Sending mail with params
      *
-     * Prend en paramètres un tableau comprenant le destinataire, l'expéditeur et le corps du message
      * @param array $params
      */
-    public function send(array $params)
+    public function send(array $from, array $to, $body, $type, $attachmentPath = null)
     {
-        $this->validateParameter($params);
+       // $this->validateParameter($params);
 
-        $message = (new \Swift_Message('Demo symfony'))->setFrom($this->params['expediteur'])
-            ->setTo($this->params['destinataire'])
-            ->setBody($this->params['body'], $this->params['type']);
-        $this->swift_Mailer->send($message);
-    }
+        $message = (new \Swift_Message('Demo symfony'))
+            ->setFrom($this->params['from'])
+            ->setTo($this->params['to']);
+            //->setCc('cc@example.com')
+            //->setBcc('bcc@example.com')
+            //->setReplyTo('fabien@example.com')
+            //->setPriority(Email::PRIORITY_HIGH)
 
-    /**
-     * Valide les paramètres qui serviront plus tard à l'envoi de mail en automatique (vérification clés-valeurs)
-     *
-     * @param array $params_
-     * @throws \ErrorException
-     */
-    private function validateParameter(array $params_)
-    {
-        foreach($this->params as $k => $v)
-        {
-            if(!isset($params_[$k]))
-            {
-                if($v == '')
-                {
-                    throw new \ErrorException("Le parametre ' . $k . ' est manquant");
-                }
-            }
-            else
-            {
-                $this->params[$k] = $params_[$k];
-            }
+        // Check if attachment
+        if (!is_null($attachmentPath)) {
+            $message->attach(\Swift_Attachment::fromPath($attachmentPath));
         }
+
+        $message->setBody($body, $type);
+
+        // Sending mail!
+        $this->swift_Mailer->send($message);
     }
 }
