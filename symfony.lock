@@ -131,6 +131,9 @@
     "nikic/php-parser": {
         "version": "v4.10.4"
     },
+    "pagerfanta/pagerfanta": {
+        "version": "v2.7.1"
+    },
     "phpdocumentor/reflection-common": {
         "version": "2.2.0"
     },
@@ -567,6 +570,9 @@
     },
     "webmozart/assert": {
         "version": "1.10.0"
+    },
+    "white-october/pagerfanta-bundle": {
+        "version": "v1.3.2"
     },
     "willdurand/jsonp-callback-validator": {
         "version": "v1.1.0"
