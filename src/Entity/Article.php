@@ -32,6 +32,11 @@ class Article
      */
     private $contentText;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Author", cascade={"all"}, fetch="EAGER")
+     */
+    private $author;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +74,18 @@ class Article
     public function setContentText(string $contentText): self
     {
         $this->contentText = $contentText;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?Author
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?Author $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }
