@@ -3,27 +3,36 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Form\ArticleType;
+use App\Repository\ArticleRepository;
+use App\Representation\Articles;
+use FOS\RestBundle\Controller\AbstractFOSRestController;
+use FOS\RestBundle\Controller\Annotations as Rest;
+use FOS\RestBundle\Request\ParamFetcherInterface;
 use JMS\Serializer\SerializerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class ArticleController extends AbstractController
+class ArticleController extends AbstractFOSRestController
 {
     /**
-     * @Route("/articles", name="article_create", methods={"POST"})
+     * @Rest\Post(
+     *    path = "/articles",
+     *    name = "app_article_create"
+     * )
+     * @Rest\View(StatusCode = 201)
+     * @ParamConverter("article", converter="fos_rest.request_body")
      */
-    public function createAction(Request $request, SerializerInterface $serializerInterface)
+    public function createAction(Article $article)
     {
-        $data = $request->getContent();
-        $article = $serializerInterface->deserialize($data, 'App\Entity\Article', 'json');
-
         $em = $this->getDoctrine()->getManager();
+
         $em->persist($article);
         $em->flush();
 
-        return new Response('', Response::HTTP_CREATED);
+        return $this->view($article, Response::HTTP_CREATED, ['Location' => $this->generateUrl('article_show', ['id' => $article->getId(), UrlGeneratorInterface::ABSOLUTE_URL])]);
     }
 
     /**
@@ -37,5 +46,46 @@ class ArticleController extends AbstractController
         $response->headers->set('Content-Type', 'application/json');
 
         return $response;
+    }
+
+    /**
+     * @Rest\Get("/list_articles", name="app_article_list")
+     * @Rest\QueryParam(
+     *     name="keyword",
+     *     requirements="[a-zA-Z0-9]",
+     *     nullable=true,
+     *     description="The keyword to search for."
+     * )
+     * @Rest\QueryParam(
+     *     name="order",
+     *     requirements="asc|desc",
+     *     default="asc",
+     *     description="Sort order (asc or desc)"
+     * )
+     * @Rest\QueryParam(
+     *     name="limit",
+     *     requirements="\d+",
+     *     default="15",
+     *     description="Max number of movies per page."
+     * )
+     * @Rest\QueryParam(
+     *     name="offset",
+     *     requirements="\d+",
+     *     default="1",
+     *     description="The pagination offset"
+     * )
+     * @Rest\View()
+     */
+    public function listAction(ArticleRepository $articleRepository, ParamFetcherInterface $paramFetcher)
+    {
+        $pager = $articleRepository->search(
+            $paramFetcher->get('keyword'),
+            $paramFetcher->get('order'),
+            $paramFetcher->get('limit'),
+            $paramFetcher->get('offset')
+        );
+
+        //return $pager->getCurrentPageResults();
+        return new Articles($pager);
     }
 }

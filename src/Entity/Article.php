@@ -4,9 +4,14 @@ namespace App\Entity;
 
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * @ORM\Entity(repositoryClass=ArticleRepository::class)
+ *
+ * @ExclusionPolicy("all")
  */
 class Article
 {
@@ -14,23 +19,24 @@ class Article
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     *
+     * @Expose
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
+     *
+     * @Expose
      */
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text")
+     *
+     * @Expose
      */
     private $content;
-
-    /**
-     * @ORM\Column(type="text")
-     */
-    private $contentText;
 
     /**
      * @ORM\ManyToOne(targetEntity="Author", cascade={"all"}, fetch="EAGER")
@@ -62,18 +68,6 @@ class Article
     public function setContent(string $content): self
     {
         $this->content = $content;
-
-        return $this;
-    }
-
-    public function getContentText(): ?string
-    {
-        return $this->contentText;
-    }
-
-    public function setContentText(string $contentText): self
-    {
-        $this->contentText = $contentText;
 
         return $this;
     }

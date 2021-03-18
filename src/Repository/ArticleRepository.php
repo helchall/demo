@@ -14,10 +14,31 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ArticleRepository extends ServiceEntityRepository
 {
+    use AbstractRepository;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Article::class);
     }
+
+    public function search($term, $order = 'asc', $limit = 20, $offset = 0)
+    {
+        $qb = $this
+            ->createQueryBuilder('a')
+            ->select('a')
+            ->orderBy('a.title', $order)
+        ;
+
+        if ($term) {
+            $qb
+                ->where('a.title LIKE ?1')
+                ->setParameter(1, '%'.$term.'%')
+            ;
+        }
+
+        return $this->paginate($qb, $limit, $offset);
+    }
+
 
     // /**
     //  * @return Article[] Returns an array of Article objects
