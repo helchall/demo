@@ -24,10 +24,10 @@ class Author
      */
     private $fullname;
 
-    /**
-     * @ORM\Column(type="string", length=255)
+     /**
+     * @ORM\Column(type="text")
      */
-    private $text;
+    private $biography;
 
     /**
      * @ORM\OneToMany(targetEntity="Article", mappedBy="author", cascade={"persist"})
@@ -56,16 +56,14 @@ class Author
         return $this;
     }
 
-    public function getText(): ?string
+    public function getBiography()
     {
-        return $this->text;
+        return $this->biography;
     }
 
-    public function setText(string $text): self
+    public function setBiography($biography)
     {
-        $this->text = $text;
-
-        return $this;
+        $this->biography = $biography;
     }
 
     /**
