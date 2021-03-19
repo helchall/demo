@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Exception\ResourceValidationException;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
 use App\Representation\Articles;
@@ -24,12 +25,23 @@ class ArticleController extends AbstractFOSRestController
      *    name = "app_article_create"
      * )
      * @Rest\View(StatusCode = 201)
-     * @ParamConverter("article", converter="fos_rest.request_body")
+     * @ParamConverter(
+     *     "article",
+     *     converter="fos_rest.request_body",
+     *     options={
+     *         "validator"={ "groups"="Create" }
+     *     }
+     * )
      */
     public function createAction(Article $article, ConstraintViolationList $violations)
     {
         if (count($violations)) {
-            return $this->view($violations, Response::HTTP_BAD_REQUEST);
+            $message = 'The JSON sent contains invalid data. Here are the errors you need to correct: ';
+            foreach ($violations as $violation) {
+                $message .= sprintf("Field %s: %s ", $violation->getPropertyPath(), $violation->getMessage());
+            }
+
+            throw new ResourceValidationException($message);
         }
 
         $em = $this->getDoctrine()->getManager();

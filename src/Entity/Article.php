@@ -29,7 +29,7 @@ class Article
      * @ORM\Column(type="string", length=100)
      *
      * @Expose
-     * @Assert\NotBlank
+     * @Assert\NotBlank(groups={"Create"})
      */
     private $title;
 
@@ -37,7 +37,7 @@ class Article
      * @ORM\Column(type="text")
      *
      * @Expose
-     * @Assert\NotBlank
+     * @Assert\NotBlank(groups={"Create"})
      */
     private $content;
 
