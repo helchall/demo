@@ -36,6 +36,7 @@ security:
          - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/forget_pass, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/list_articles, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/articles, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/authors, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/, roles: ROLE_USER }
          #- { path: ^/profile, roles: ROLE_USER }
