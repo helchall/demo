@@ -14,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Validator\ConstraintViolationList;
 
 class ArticleController extends AbstractFOSRestController
 {
@@ -25,12 +26,18 @@ class ArticleController extends AbstractFOSRestController
      * @Rest\View(StatusCode = 201)
      * @ParamConverter("article", converter="fos_rest.request_body")
      */
-    public function createAction(Article $article)
+    public function createAction(Article $article, ConstraintViolationList $violations)
     {
+        if (count($violations)) {
+            return $this->view($violations, Response::HTTP_BAD_REQUEST);
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $em->persist($article);
         $em->flush();
+
+        //return $article;
 
         return $this->view($article, Response::HTTP_CREATED, ['Location' => $this->generateUrl('article_show', ['id' => $article->getId(), UrlGeneratorInterface::ABSOLUTE_URL])]);
     }

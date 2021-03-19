@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ArticleRepository::class)
@@ -28,6 +29,7 @@ class Article
      * @ORM\Column(type="string", length=100)
      *
      * @Expose
+     * @Assert\NotBlank
      */
     private $title;
 
@@ -35,6 +37,7 @@ class Article
      * @ORM\Column(type="text")
      *
      * @Expose
+     * @Assert\NotBlank
      */
     private $content;
 
