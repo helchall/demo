@@ -7,17 +7,31 @@ security:
         #users_in_memory: { memory: null }
         database_users:
             entity: { class: App\Entity\User, property: username }
+        api:
+            entity: { class: App\Entity\User, property: apiToken }
 
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        api:
+            pattern: ^/api/
+            provider: api
+            guard:
+                authenticators:
+                    - App\Security\ApiTokenAuthenticator
         main:
             anonymous: lazy
             provider: database_users
             guard:
                 authenticators:
                     - App\Security\LoginFormAuthenticator
+
+            # guard:
+            #     authenticators:
+            #         - App\Security\LoginFormAuthenticator
+            #         - App\Security\ApiTokenAuthenticator
+            #     entry_point: App\Security\LoginFormAuthenticator
             logout:
                 path: app_logout
                 # where to redirect after logout
@@ -39,4 +53,5 @@ security:
          - { path: ^/articles, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/authors, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/, roles: ROLE_USER }
+         - { path: '^/api', roles: ROLE_USER }
          #- { path: ^/profile, roles: ROLE_USER }
