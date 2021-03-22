@@ -5,9 +5,15 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\ArticleeRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
+# for more example see: https://www.kaherecode.com/tutorial/developper-une-api-rest-avec-symfony-et-api-platform
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     normalizationContext={"groups"={"article:read"}},
+ *     denormalizationContext={"groups"={"article:write"}}
+ * )
  * @ORM\Entity(repositoryClass=ArticleeRepository::class)
  */
 class Articlee
@@ -16,41 +22,57 @@ class Articlee
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     *
+     * @Groups("article:read")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Groups({"article:read", "article:write"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Groups("article:read")
      */
     private $slug;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     *
+     * @Groups({"article:read", "article:write"})
      */
     private $content;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @Groups({"article:read", "article:write"})
      */
     private $picture;
 
     /**
      * @ORM\Column(type="boolean")
+     *
+     * @Groups("article:read")
      */
     private $isPublished;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     *
+     * @Groups("article:read")
      */
     private $publishedAt;
 
     /**
      * @ORM\Column(type="datetime")
+     *
+     * @Groups("article:read")
      */
     private $updatedAt;
 
