@@ -1,4 +1,6 @@
 api_platform:
+    defaults:
+        pagination_maximum_items_per_page: 10
     title: 'Symfony REST API'
     description: 'A Symfony API to manage a simple blog app.'
     version: '1.0.0'
