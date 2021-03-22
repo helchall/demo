@@ -68,7 +68,7 @@ class ArticleController extends AbstractFOSRestController
     }
 
     /**
-     * @Rest\Get("/api/list_articles", name="app_article_list")
+     * @Rest\Get("/api_token/list_articles", name="app_article_list")
      * @Rest\QueryParam(
      *     name="keyword",
      *     requirements="[a-zA-Z0-9]",

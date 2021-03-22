@@ -7,16 +7,16 @@ security:
         #users_in_memory: { memory: null }
         database_users:
             entity: { class: App\Entity\User, property: username }
-        api:
+        api_token:
             entity: { class: App\Entity\User, property: apiToken }
 
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        api:
-            pattern: ^/api/
-            provider: api
+        api_token:
+            pattern: ^/api_token/
+            provider: api_token
             guard:
                 authenticators:
                     - App\Security\ApiTokenAuthenticator
@@ -54,4 +54,5 @@ security:
          - { path: ^/authors, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/, roles: ROLE_USER }
          - { path: '^/api', roles: ROLE_USER }
+         - { path: '^/api_token', roles: ROLE_USER }
          #- { path: ^/profile, roles: ROLE_USER }
