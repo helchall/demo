@@ -1,6 +1,7 @@
 {
   "devDependencies": {
     "@symfony/webpack-encore": "^1.1.2",
-    "eslint": "^7.22.0"
+    "eslint": "^7.22.0",
+    "webpack-notifier": "^1.6.0"
   }
 }
