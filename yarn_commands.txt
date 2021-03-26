@@ -24,3 +24,6 @@ const el = React.createElement(
     'Lift History! ',
     React.createElement('span', null, '❤️')
 );
+
+Adding the ESLint react plugin
+yarn add eslint-plugin-react --dev
