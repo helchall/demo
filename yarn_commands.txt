@@ -1,0 +1,10 @@
+Install npm and yarn
+yarn install or  yarn install --force
+yarn add eslint --dev
+yarn add @symfony/webpack-encore --dev
+yarn config set ignore-engines true
+yarn add webpack-notifier@^1.6.0 --dev
+composer require symfony/webpack-encore-bundle
+yarn add react react-dom --dev
+yarn encore dev
+yarn run encore dev --watch
