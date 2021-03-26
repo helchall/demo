@@ -24,6 +24,8 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/js/app.js')
+    .addEntry('rep_log', './assets/js/rep_log.js')
+    .addEntry('rep_log_react', './assets/js/rep_log_react.js')
     //.addEntry('page1', './assets/js/page1.js')
     //.addEntry('page2', './assets/js/page2.js')
 

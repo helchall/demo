@@ -10,6 +10,7 @@
 		<title>
 			{% block title %}Welcome!{% endblock %}
 		</title>
+		<link rel="shortcut icon" href="#">
 		{# Run `composer require symfony/webpack-encore-bundle`
 		and uncomment the following Encore helpers to start using Symfony UX #}
 		{% block stylesheets %}
@@ -338,7 +339,7 @@
 			</div>
 		</div>
         {% block javascripts %}
-			{#{{ encore_entry_script_tags('app') }}#}
+			{{ encore_entry_script_tags('rep_log_react') }}
 			<!-- Bootstrap core JavaScript-->
             <script src="{{ asset('vendor/jquery/jquery.min.js') }}"> </script>
 			<script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
