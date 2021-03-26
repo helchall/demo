@@ -1,3 +1,6 @@
+see:
+https://symfony.com/doc/4.4/frontend/encore/simple-example.html
+
 Install npm and yarn
 yarn install or  yarn install --force
 yarn add eslint --dev
@@ -8,3 +11,16 @@ composer require symfony/webpack-encore-bundle
 yarn add react react-dom --dev
 yarn encore dev
 yarn run encore dev --watch
+
+Installing JSX (to read html in react)
+yarn add @babel/preset-react
+
+example:
+const el = <h2>Lift Stuff! <span>❤️</span></h2>;
+<==>
+const el = React.createElement(
+    'h2',
+    null,
+    'Lift History! ',
+    React.createElement('span', null, '❤️')
+);
