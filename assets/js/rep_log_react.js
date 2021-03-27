@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import ReactDom from 'react-dom';
+import React from 'react';
+import { render } from 'react-dom';
+import RepLogApp from './Replog/RepLogApp';
 
+const shouldShowHeart = true;
 
-class RepLogAPP extends Component {
-    render() {
-        return <h2>Lift Stuff! <span>❤️</span></h2>;
-    }
-}
-
-console.log(<RepLogAPP/>)
-
-ReactDom.render(<RepLogAPP/>, document.getElementById('lift-stuff-app'));
+render(
+    <div>
+        <RepLogApp withHeart={shouldShowHeart} />
+        <RepLogApp withHeart={false} />
+    </div>,
+    document.getElementById('lift-stuff-app')
+);
