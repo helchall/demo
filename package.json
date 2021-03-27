@@ -8,6 +8,7 @@
     "webpack-notifier": "^1.6.0"
   },
   "dependencies": {
-    "@babel/preset-react": "^7.12.13"
+    "@babel/preset-react": "^7.12.13",
+    "core-js": "^3.9.1"
   }
 }
