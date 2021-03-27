@@ -3,6 +3,11 @@ https://symfony.com/doc/4.4/frontend/encore/simple-example.html
 
 Install npm and yarn
 yarn install or  yarn install --force
+
+yarn cache clean
+yarn global add xo
+npm i -g yarn (in case to update yarn)
+
 yarn add eslint --dev
 yarn add @symfony/webpack-encore --dev
 yarn config set ignore-engines true
@@ -27,3 +32,6 @@ const el = React.createElement(
 
 Adding the ESLint react plugin
 yarn add eslint-plugin-react --dev
+
+Installing core.js (to use component)
+npm i core-js
