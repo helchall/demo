@@ -61,6 +61,37 @@ export default class RepLogApp extends Component {
                     </tr>
                     </tfoot>
                 </table>
+                <div className="card-body">
+                    <h1>Create new User</h1>
+                    <form className="form-inline" data-url="{{ path('user_new') }}">
+                        <div id="user">
+                            <div>
+                                <label htmlFor="user_email" className="required">Email</label>
+                                <input type="email" id="user_email" name="user[email]" required="required" />
+                            </div>
+                            <div>
+                                <label htmlFor="user_username" className="required">Username</label>
+                                <input type="text" id="user_username" name="user[username]" required="required" />
+                            </div>
+                            <div>
+                                <label htmlFor="user_plainPassword_first" className="required">Password</label>
+                                <input type="password" id="user_plainPassword_first" name="user[plainPassword][first]" required="required" />
+                            </div>
+                            <div>
+                                <label htmlFor="user_plainPassword_second" className="required">Repeat Password</label>
+                                <input type="password" id="user_plainPassword_second" name="user[plainPassword][second]" required="required" />
+                            </div>
+                            {/* <div>
+                                <label className="required">Roles</label>
+                                <div id="user_roles">
+                                    <label for="user_roles_0" className="required">0</label>
+                                    <input type="text" id="user_roles_0" name="user[roles][0]" required="required" value="ROLE_USER" />
+                                </div>
+                            </div> */}
+                        </div>
+                        <button className="btn">Save</button>
+                    </form>
+                </div>
             </div>
         );
     }
