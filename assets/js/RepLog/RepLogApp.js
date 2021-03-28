@@ -17,16 +17,16 @@ export default class RepLogApp extends Component {
         ];
 
         // Like a foreach ...
-        const repLogElements = repLogs.map((repLog) => {
-            return (
-                <tr key={repLog.id}>
-                    <td>{repLog.itemLabel}</td>
-                    <td>{repLog.reps}</td>
-                    <td>{repLog.totalWeightLifted}</td>
-                    <td>...</td>
-                </tr>
-            )
-        });
+        // const repLogElements = repLogs.map((repLog) => {
+        //     return (
+        //         <tr key={repLog.id}>
+        //             <td>{repLog.itemLabel}</td>
+        //             <td>{repLog.reps}</td>
+        //             <td>{repLog.totalWeightLifted}</td>
+        //             <td>...</td>
+        //         </tr>
+        //     )
+        // });
 
         // Rename class => className
         return (
@@ -42,7 +42,15 @@ export default class RepLogApp extends Component {
                     </tr>
                     </thead>
                     <tbody>
-                    {repLogElements}
+                    {/* {repLogElements} */}
+                    {repLogs.map((repLog) => (
+                        <tr key={repLog.id}>
+                            <td>{repLog.itemLabel}</td>
+                            <td>{repLog.reps}</td>
+                            <td>{repLog.totalWeightLifted}</td>
+                            <td>...</td>
+                        </tr>
+                    ))}
                     </tbody>
                     <tfoot>
                     <tr>
