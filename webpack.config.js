@@ -70,6 +70,13 @@ Encore
 
     // uncomment if you use API Platform Admin (composer require api-admin)
     .enableReactPreset()
+
+    .configureBabel(function (babelConfig) {
+        babelConfig.plugins = [
+            "@babel/plugin-proposal-object-rest-spread","@babel/plugin-proposal-class-properties",
+            "@babel/plugin-transform-runtime"
+        ]
+    })
     //.addEntry('admin', './assets/js/admin.js')
 ;
 
