@@ -31,6 +31,7 @@ class UserController extends AbstractController
      */
     public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
+        die('titti');
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
