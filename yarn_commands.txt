@@ -35,3 +35,9 @@ yarn add eslint-plugin-react --dev
 
 Installing core.js (to use component)
 npm i core-js
+
+Update react module and install some dependencies:
+
+yarn add --dev @babel/preset-react
+yarn add react react-dom prop-types react-router-dom reactstrap axios
+yarn add @babel/plugin-proposal-class-properties @babel/plugin-transform-runtime
