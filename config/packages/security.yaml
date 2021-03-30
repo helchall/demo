@@ -9,6 +9,9 @@ security:
             entity: { class: App\Entity\User, property: username }
         api_token:
             entity: { class: App\Entity\User, property: apiToken }
+        web_service_user_provider:
+            id:
+                web_service_user_provider
 
     firewalls:
         dev:
@@ -20,6 +23,12 @@ security:
             guard:
                 authenticators:
                     - App\Security\ApiTokenAuthenticator
+        secured_area:
+            pattern: ^/api_react
+            stateless: true
+            simple_preauth:
+                authenticator: jwt_auth.jwt_authenticator
+            provider: web_service_user_provider
         main:
             anonymous: lazy
             provider: database_users
@@ -52,6 +61,8 @@ security:
          - { path: ^/list_articles, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/articles, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/authors, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/api_react/public, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/api_react/private, roles: ROLE_OAUTH_AUTHENTICATED }
          - { path: ^/, roles: ROLE_USER }
          - { path: '^/api', roles: ROLE_USER }
          - { path: '^/api_token', roles: ROLE_USER }
