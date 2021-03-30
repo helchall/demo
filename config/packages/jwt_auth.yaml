@@ -1,0 +1,6 @@
+# see : https://auth0.com/blog/developing-modern-apps-with-symfony-and-react/
+
+jwt_auth:
+    domain: dev-z07jl-je.eu.auth0.com
+    authorized_issuer: https://dev-z07jl-je.eu.auth0.com/
+    api_identifier: http://demo.local/api_react
