@@ -6,6 +6,13 @@ yarn install or  yarn install --force
 
 yarn cache clean
 yarn global add xo
+
+Set-Service ssh-agent -StartupType Automatic (Windows)
+
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))  (Windows)
+
+
+
 npm i -g yarn (in case to update yarn)
 
 yarn add eslint --dev
