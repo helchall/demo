@@ -25,6 +25,7 @@ Encore
      */
     .addEntry('app', './assets/js/app.js')
     .addEntry('app_onglet', './assets/js/AppOnglet.js')
+    .addEntry('indexcounter', './assets/js/indexcounter.js')
     .addEntry('index', './assets/js/index.js')
     .addEntry('rep_log', './assets/js/rep_log.js')
     .addEntry('rep_log_react', './assets/js/rep_log_react.js')
