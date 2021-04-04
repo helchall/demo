@@ -24,11 +24,10 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/js/app.js')
+    .addEntry('rep_log_react', './assets/js/rep_log_react.js')
     .addEntry('app_onglet', './assets/js/AppOnglet.js')
     .addEntry('indexcounter', './assets/js/indexcounter.js')
     .addEntry('index', './assets/js/index.js')
-    .addEntry('rep_log', './assets/js/rep_log.js')
-    .addEntry('rep_log_react', './assets/js/rep_log_react.js')
     .addEntry('indextoggle', './assets/js/hooks/index.js')
     //.addEntry('page1', './assets/js/page1.js')
     //.addEntry('page2', './assets/js/page2.js')
