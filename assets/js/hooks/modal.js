@@ -30,6 +30,9 @@ const Modal = ({ isShowing, hide, title, ...props }) =>
                   </button>
                 </div>
                 <div className="modal-body">{props.children}</div>
+                <div className="modal-footer">
+						      <button className="btn btn-secondary" type="button" onClick={hide}>Cancel</button>
+					      </div>
               </div>
             </div>
           </div>
