@@ -29,6 +29,7 @@ Encore
     .addEntry('indexcounter', './assets/js/indexcounter.js')
     .addEntry('index', './assets/js/index.js')
     .addEntry('indextoggle', './assets/js/hooks/index.js')
+    .addEntry('index_react_comedy', './assets/js/ReactComdedyClub/src/index.js')
     //.addEntry('page1', './assets/js/page1.js')
     //.addEntry('page2', './assets/js/page2.js')
 
