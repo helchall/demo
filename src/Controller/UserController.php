@@ -21,9 +21,28 @@ class UserController extends AbstractController
      */
     public function index(UserRepository $userRepository): Response
     {
-        return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findAll(),
-        ]);
+        $users = $userRepository->findAll();
+        $list  = [];
+
+        // To remove : testing react index and create !
+        /** @User $user */
+        foreach ($users as $user) {
+            $list[] = [
+                'id'       => $user->getId(),
+                'email'    => $user->getEmail(),
+                'username' => $user->getUsername(),
+                'roles'    => $user->getRoles()
+            ];
+        }
+
+        $data     = json_encode($list);
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+        // return $this->render('user/index.html.twig', [
+        //     'users' => $userRepository->findAll(),
+        // ]);
     }
 
     /**
@@ -31,6 +50,10 @@ class UserController extends AbstractController
      */
     public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
+        $data = json_decode($request->getContent(), true);
+
+        var_dump($data);
+        die('zozo');
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
