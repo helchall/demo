@@ -20,6 +20,7 @@
     "axios": "^0.21.1",
     "core-js": "^3.9.1",
     "prop-types": "^15.7.2",
-    "reactstrap": "^8.9.0"
+    "reactstrap": "^8.9.0",
+    "semantic-ui-react": "^2.0.3"
   }
 }
