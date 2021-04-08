@@ -17,64 +17,84 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/", name="user_index", methods={"GET"})
+     * @Route("/index/{reactIndex}", name="user_index", methods={"GET"}, defaults={"reactIndex": null})
      */
-    public function index(UserRepository $userRepository): Response
+    public function index($reactIndex, UserRepository $userRepository): Response
     {
         $users = $userRepository->findAll();
         $list  = [];
 
-        // To remove : testing react index and create !
-        /** @User $user */
-        foreach ($users as $user) {
-            $list[] = [
-                'id'       => $user->getId(),
-                'email'    => $user->getEmail(),
-                'username' => $user->getUsername(),
-                'roles'    => $user->getRoles()
-            ];
+        if ($reactIndex) {
+            /** @User $user */
+            foreach ($users as $user) {
+                $list[] = [
+                    'id'       => $user->getId(),
+                    'email'    => $user->getEmail(),
+                    'username' => $user->getUsername(),
+                    'roles'    => $user->getRoles()
+                ];
+            }
+
+            $data     = json_encode($list);
+            $response = new Response($data);
+            $response->headers->set('Content-Type', 'application/json');
+
+            return $response;
+        } else {
+            return $this->render('user/index.html.twig', [
+                'users' => $users,
+            ]);
         }
-
-        $data     = json_encode($list);
-        $response = new Response($data);
-        $response->headers->set('Content-Type', 'application/json');
-
-        return $response;
-        // return $this->render('user/index.html.twig', [
-        //     'users' => $userRepository->findAll(),
-        // ]);
     }
 
     /**
-     * @Route("/new", name="user_new", methods={"GET","POST"})
+     * @Route("/new/{reactNew}", name="user_new", methods={"GET","POST"}, defaults={"reactNew": null})
      */
-    public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function new($reactNew, Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
-        $data = json_decode($request->getContent(), true);
+        $entityManager = $this->getDoctrine()->getManager();
+        $user          = new User();
 
-        var_dump($data);
-        die('zozo');
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
+        if ($reactNew) {
+            $data = json_decode($request->getContent(), true);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setEmail($data['email']);
+            $user->setUsername($data['username']);
             // Encode the password (you could also do this via Doctrine listener)
-            $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+            $password = $passwordEncoder->encodePassword($user, $data['plainPassword']);
             $user->setPassword($password);
 
             // Save the User!
-            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute('user_index');
-        }
+            $data     = json_encode($this->transform($user));
+            $response = new Response($data);
+            $response->headers->set('Content-Type', 'application/json');
+            $response->setStatusCode(Response::HTTP_CREATED);
 
-        return $this->render('user/new.html.twig', [
-            'user' => $user,
-            'form' => $form->createView(),
-        ]);
+            return $response;
+        } else {
+            $form = $this->createForm(UserType::class, $user);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                // Encode the password (you could also do this via Doctrine listener)
+                $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+                $user->setPassword($password);
+
+                // Save the User!
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('user_index');
+            }
+
+            return $this->render('user/new.html.twig', [
+                'user' => $user,
+                'form' => $form->createView(),
+            ]);
+        }
     }
 
     /**
@@ -123,5 +143,14 @@ class UserController extends AbstractController
         }
 
         return $this->redirectToRoute('user_index');
+    }
+
+    private function transform(User $user)
+    {
+        return [
+                'id'       => (int) $user->getId(),
+                'email'    => (string) $user->getEmail(),
+                'username' => $user->getUsername()
+        ];
     }
 }
