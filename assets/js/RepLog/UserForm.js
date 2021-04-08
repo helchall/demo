@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { useState } from "react";
 import { Button, Form, Message } from 'semantic-ui-react'
-
 import { API_BASE_URL } from './config'
 
 export default class UserForm extends Component {
@@ -35,7 +33,7 @@ export default class UserForm extends Component {
             errorMessage: ''
         });
 
-        const response = await fetch(API_BASE_URL + '/user/new', {
+        const response = await fetch(API_BASE_URL + '/user/new/true', {
             method: 'POST',
             body: JSON.stringify({
                 "email": this.state.email,
@@ -66,28 +64,31 @@ export default class UserForm extends Component {
 
     render() {
         return (
-            <Form error={this.state.error} onSubmit={this.onSubmit}>
-                <Form.Field error={this.state.error}>
-                    <label>Email</label>
-                    <input placeholder='enter email' name="email" value={this.state.email} onChange={this.handleChange}/>
-                </Form.Field>
-                <Form.Field error={this.state.error}>
-                    <label>Username</label>
-                    <input placeholder='enter username' name="username" value={this.state.username} onChange={this.handleChange}/>
-                </Form.Field>
-                <Form.Field error={this.state.error}>
-                    <label>Password</label>
-                    <input placeholder='enter password' name="plainPassword" value={this.state.plainPassword} onChange={this.handleChange}/>
-                { this.state.error &&
-                <Message
-                    error
-                    header='Error creating user'
-                    content={this.state.errorMessage}
-                />
-                }
-                </Form.Field>
-                <Button type='submit' loading={this.state.isLoading}>Add User</Button>
-            </Form>
+            <div>
+                <h4>Create User</h4>
+                <Form error={this.state.error} onSubmit={this.onSubmit}>
+                    <Form.Field error={this.state.error}>
+                        <label>Email</label>
+                        <input placeholder='enter email' name="email" required="required" value={this.state.email} onChange={this.handleChange}/>
+                    </Form.Field>
+                    <Form.Field error={this.state.error}>
+                        <label>Username</label>
+                        <input placeholder='enter username' name="username" required="required" value={this.state.username} onChange={this.handleChange}/>
+                    </Form.Field>
+                    <Form.Field error={this.state.error}>
+                        <label>Password</label>
+                        <input placeholder='enter password' name="plainPassword" required="required" value={this.state.plainPassword} onChange={this.handleChange}/>
+                    { this.state.error &&
+                    <Message
+                        error
+                        header='Error creating user'
+                        content={this.state.errorMessage}
+                    />
+                    }
+                    </Form.Field>
+                    <Button className="btn btn-primary btn-user" type='submit' loading={this.state.isLoading}>Add User</Button>
+                </Form>
+            </div>
         )
     }
 };
