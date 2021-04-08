@@ -27,12 +27,7 @@ class UserController extends AbstractController
         if ($reactIndex) {
             /** @User $user */
             foreach ($users as $user) {
-                $list[] = [
-                    'id'       => $user->getId(),
-                    'email'    => $user->getEmail(),
-                    'username' => $user->getUsername(),
-                    'roles'    => $user->getRoles()
-                ];
+                $list[] = $this->transform($user);
             }
 
             $data     = json_encode($list);
@@ -150,7 +145,8 @@ class UserController extends AbstractController
         return [
                 'id'       => (int) $user->getId(),
                 'email'    => (string) $user->getEmail(),
-                'username' => $user->getUsername()
+                'username' => $user->getUsername(),
+                'roles'    => $user->getRoles()
         ];
     }
 }
