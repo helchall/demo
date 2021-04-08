@@ -28,8 +28,8 @@ export default class RepLogApp extends Component {
         if (!this.state.users) {
             try {
                 this.setState({ isLoading: true });
-                const response = await fetch(API_BASE_URL + '/user');
-                const data = await response.json();
+                const response = await fetch(API_BASE_URL + '/user/index/true');
+                const data     = await response.json();
                 this.setState({ users: data, isLoading: false});
             } catch (err) {
                 this.setState({ isLoading: false });
@@ -73,6 +73,11 @@ export default class RepLogApp extends Component {
                         <UserForm onAddition={this.onAddition} />
                     </div>
                 }
+                <style jsx="true">{`
+                    label {
+                        width: 5rem;
+                    }
+                `}</style>
             </div>
         );
     }
