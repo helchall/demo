@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Button, Form, Message } from 'semantic-ui-react'
-import { API_BASE_URL } from './config'
+import { Button, Form, Message } from 'semantic-ui-react';
+import { API_BASE_URL } from './config';
 
 export default class UserForm extends Component {
 

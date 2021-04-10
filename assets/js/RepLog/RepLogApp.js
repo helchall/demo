@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import { Header, Message, Table } from 'semantic-ui-react';
+import {
+    Header,
+    Message,
+    Table,
+} from 'semantic-ui-react';
 import { API_BASE_URL } from './config';
 import UserForm from './UserForm';
 
@@ -28,6 +32,7 @@ export default class RepLogApp extends Component {
         if (!this.state.users) {
             try {
                 this.setState({ isLoading: true });
+                // fetch or axios.get('')
                 const response = await fetch(API_BASE_URL + '/user/index/true');
                 const data     = await response.json();
                 this.setState({ users: data, isLoading: false});
